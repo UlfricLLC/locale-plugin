@@ -1,10 +1,9 @@
 package com.ulfric.etruscans;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.function.BiConsumer;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -13,10 +12,11 @@ import org.w3c.dom.NodeList;
 
 import org.bukkit.ChatColor;
 
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.function.BiConsumer;
 
 enum FancyMessage {
 

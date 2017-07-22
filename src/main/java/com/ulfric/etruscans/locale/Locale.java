@@ -9,7 +9,7 @@ public class Locale extends Bean {
 	private static Locale locale; // TODO extract to services
 
 	public static String lookup(String code) {
-		return locale == null ? null : locale.getMessage(code);
+		return locale == null ? code : locale.getMessage(code);
 	}
 
 	private Map<String, String> messages;
