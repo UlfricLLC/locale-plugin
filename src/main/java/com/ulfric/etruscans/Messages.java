@@ -5,7 +5,7 @@ import net.md_5.bungee.chat.ComponentSerializer;
 import org.bukkit.command.CommandSender;
 
 import com.ulfric.andrew.Sender;
-import com.ulfric.etruscans.locale.Locale;
+import com.ulfric.servix.services.locale.LocaleService;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -36,7 +36,7 @@ public final class Messages {
 	}
 
 	public static void send(CommandSender sender, String message, Map<String, String> context) {
-		message = Locale.lookup(message);
+		message = LocaleService.defaultMessage(message);
 		CompiledMessage send = getCompiledTellrawMessage(message);
 		message = send.apply(sender, context);
 		sender.spigot().sendMessage(ComponentSerializer.parse(message)); // TODO proper caching (requires whole Etruscans rewrite)

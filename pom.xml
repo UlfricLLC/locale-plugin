@@ -23,6 +23,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>com.ulfric.servix</groupId>
+			<artifactId>servix</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+
+		<dependency>
 			<groupId>com.ulfric.data</groupId>
 			<artifactId>data</artifactId>
 			<version>1.0.0</version>
