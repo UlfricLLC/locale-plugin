@@ -13,7 +13,6 @@
 	<groupId>com.ulfric.etruscans</groupId>
 	<artifactId>etruscans</artifactId>
 	<version>1.0.0</version>
-	<name>Etruscans</name>
 
 	<dependencies>
 		<dependency>
