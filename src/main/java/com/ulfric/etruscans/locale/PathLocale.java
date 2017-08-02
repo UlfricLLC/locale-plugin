@@ -9,7 +9,7 @@ import com.ulfric.servix.services.locale.LocaleService;
 public class PathLocale implements LocaleService { // TODO different language support
 
 	@Settings
-	private IgnoreCaseLocale english;
+	private SimpleLocale english;
 
 	@Override
 	public Class<LocaleService> getService() {
