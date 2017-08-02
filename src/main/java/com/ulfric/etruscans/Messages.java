@@ -36,12 +36,14 @@ public final class Messages {
 	}
 
 	public static void send(CommandSender sender, String message, Map<String, String> context) {
+		message = getMessage(sender, message, context);
+		sender.spigot().sendMessage(ComponentSerializer.parse(message)); // TODO proper caching (requires whole Etruscans rewrite)
+	}
+
+	public static String getMessage(CommandSender sender, String message, Map<String, String> context) {
 		message = LocaleService.defaultMessage(message);
 		CompiledMessage send = getCompiledTellrawMessage(message);
-		message = send.apply(sender, context);
-		sender.spigot().sendMessage(ComponentSerializer.parse(message)); // TODO proper caching (requires whole Etruscans rewrite)
-		return;
-		// TODO
+		return send.apply(sender, context);
 	}
 
 	private static CompiledMessage getCompiledTellrawMessage(String message) {
