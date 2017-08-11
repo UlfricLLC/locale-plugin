@@ -1,8 +1,10 @@
 package com.ulfric.etruscans;
 
+import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.chat.ComponentSerializer;
 
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import com.ulfric.andrew.Sender;
 import com.ulfric.servix.services.locale.LocaleService;
@@ -37,7 +39,13 @@ public final class Messages {
 
 	public static void send(CommandSender sender, String message, Map<String, String> context) {
 		message = getMessage(sender, message, context);
-		sender.spigot().sendMessage(ComponentSerializer.parse(message)); // TODO proper caching (requires whole Etruscans rewrite)
+		BaseComponent[] endMessage = ComponentSerializer.parse(message);
+		if (sender instanceof Player) { // TODO not required in new spigot versions -- backport
+			Player player = (Player) sender;
+			player.spigot().sendMessage(endMessage);
+			return;
+		}
+		sender.sendMessage(BaseComponent.toLegacyText(endMessage));
 	}
 
 	public static String getMessage(CommandSender sender, String message, Map<String, String> context) {

@@ -3,7 +3,7 @@ package com.ulfric.etruscans;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
-import com.ulfric.tryto.Try;
+import com.ulfric.tryto.TryTo;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -12,7 +12,7 @@ import java.io.StringReader;
 
 public class XmlHelper {
 
-	private static final DocumentBuilder DOCUMENTS = Try.toGet(DocumentBuilderFactory.newInstance()::newDocumentBuilder);
+	private static final DocumentBuilder DOCUMENTS = TryTo.get(DocumentBuilderFactory.newInstance()::newDocumentBuilder);
 
 	public static Document parseIncompleteDocument(String xml) {
 		return XmlHelper.parseDocument("<doc>" + xml + "</doc>");
@@ -20,7 +20,7 @@ public class XmlHelper {
 
 	public static Document parseDocument(String xml) {
 		InputSource source = new InputSource(new StringReader(xml));
-		return Try.toGet(() -> DOCUMENTS.parse(source));
+		return TryTo.get(() -> DOCUMENTS.parse(source));
 	}
 
 	private XmlHelper() {
