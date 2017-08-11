@@ -4,6 +4,7 @@ import net.md_5.bungee.chat.ComponentSerializer;
 
 import org.bukkit.command.CommandSender;
 
+import com.ulfric.commons.text.RegexHelper;
 import com.ulfric.etruscans.placeholder.Placeholder;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.regex.Pattern;
 final class CompiledMessage implements BiFunction<CommandSender, Map<String, String>, String> {
 
 	private static final double EXPECTED_LENGTH_MULTIPLIER = 0.2;
-	private static final Pattern VARIABLE = Pattern.compile(CompiledMessage.escape("(?i)${[A-Z0-9_]+}"));
+	private static final Pattern VARIABLE = RegexHelper.compile(CompiledMessage.escape("(?i)${[A-Z0-9_]+}"));
 
 	private static String escape(String pattern) { // TODO replace with proper regex
 		return pattern.replace("$", Pattern.quote("$")).replace("{", Pattern.quote("{")).replace("}",
