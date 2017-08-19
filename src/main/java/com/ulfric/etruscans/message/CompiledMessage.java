@@ -23,8 +23,9 @@ import java.util.regex.Pattern;
 public class CompiledMessage extends AggregatingMessagePart { // TODO flatten messages to save bandwidth
 
 	public static void main(String[] args) {
-		//CompiledMessage test = compile("<red>this is in red <green>and this is green</green> but this is red</red>");
-		CompiledMessage test = compile("<hover value=\"Hovering over all\">Hover over me!</hover>");
+		//CompiledMessage test = compile("<red>this is in red <green><bold>and this is green</bold></green><bold> but this is red</bold></red>");
+		//CompiledMessage test = compile("<hover value=\"Hovering over all\">Hover over me!</hover>");
+		CompiledMessage test = compile("<foreach value=\"vals\">${val}</foreach>");
 		Details details = Details.of(Detail.single("vals", Arrays.asList("one", "two", "three")));
 		Message display = test.toMessage(null, details);
 		System.out.println(display);
@@ -93,20 +94,23 @@ public class CompiledMessage extends AggregatingMessagePart { // TODO flatten me
 		return compile(root);
 	}
 
-	private static CompiledMessage compile(Node message) { // TODO
-		CompiledMessage compiled = createBaseFromNode(message);
+	static CompiledMessage compile(Node message) { // TODO
+		CompiledMessage base = new CompiledMessage(CompiledMessage.emptyMessage());
+		Result result = addNodeToBase(base, message);
 
 		String value = XmlHelper.getNodeValue(message);
 		if (value != null) {
-			return compiled;
+			return base;
 		}
 
-		XmlHelper.asList(message.getChildNodes())
-				.stream()
-				.map(CompiledMessage::compile)
-				.forEach(compiled.parts::add);
+		if (result == Result.CONTINUE) {
+			XmlHelper.asList(message.getChildNodes())
+			.stream()
+			.map(CompiledMessage::compile)
+			.forEach(base.parts::add);
+		}
 
-		return compiled;
+		return base;
 	}
 
 	private static CompiledMessage compilePlainMessage(String message) { // TODO cleanup, this method is too complex
@@ -146,25 +150,26 @@ public class CompiledMessage extends AggregatingMessagePart { // TODO flatten me
 		return new CompiledMessage(copy);
 	}
 
-	private static CompiledMessage createBaseFromNode(Node message) {
+	private static Result addNodeToBase(CompiledMessage base, Node message) {
 		NodeToMessage function = TRANSFORMERS.get(message.getNodeName().toLowerCase());
 
 		if (function == null) {
-			return compilePlainMessage(XmlHelper.getNodeValue(message));
+			String value = XmlHelper.getNodeValue(message);
+			if (value == null) {
+				return Result.CONTINUE;
+			}
+			base.parts.add(compilePlainMessage(value));
+			return Result.CONTINUE;
 		}
 
-		CompiledMessage created = function.apply(message);
-		if (created == null) {
-			return compilePlainMessage(XmlHelper.getNodeValue(message));
-		}
-
-		if (StringUtils.isEmpty(created.base.getText())) {
+		if (StringUtils.isEmpty(base.base.getText())) {
 			String value = XmlHelper.getNodeValue(message);
 			if (!StringUtils.isEmpty(value)) {
-				created.base.setText(value);
+				base.base.setText(value);
 			}
 		}
-		return created;
+
+		return function.apply(message, base);
 	}
 
 	protected static final Message emptyMessage() {
@@ -173,7 +178,7 @@ public class CompiledMessage extends AggregatingMessagePart { // TODO flatten me
 		return message;
 	}
 
-	private final Message base;
+	protected final Message base;
 
 	CompiledMessage(Message base) {
 		super(new ArrayList<>());

@@ -4,12 +4,15 @@ import org.w3c.dom.Node;
 
 import com.ulfric.commons.xml.XmlHelper;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public enum NodeToHover implements NodeToMessage {
 
 	INSTANCE;
 
 	@Override
-	public final CompiledMessage apply(Node node) {
+	public final Result apply(Node node, CompiledMessage base) {
 		Node valueNode = node.getAttributes().getNamedItem("value");
 
 		if (valueNode == null) {
@@ -22,9 +25,13 @@ public enum NodeToHover implements NodeToMessage {
 			return null;
 		}
 
-		CompiledMessage message = CompiledMessage.wrap(CompiledMessage.emptyMessage());
-		message.parts.add(new HoverMessagePart(CompiledMessage.compile(value)));
-		return message;
+		List<CompiledMessage> extra = XmlHelper.asList(node.getChildNodes()).stream()
+				.map(CompiledMessage::compile)
+				.collect(Collectors.toList());
+
+		base.parts.add(new HoverCompiledMessage(CompiledMessage.compile(value), extra));
+
+		return Result.FINISHED;
 	}
 
 }

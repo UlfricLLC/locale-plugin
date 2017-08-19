@@ -4,9 +4,6 @@ import org.w3c.dom.Node;
 
 import org.bukkit.ChatColor;
 
-import com.ulfric.commons.xml.XmlHelper;
-import com.ulfric.fancymessage.Message;
-
 import java.util.Objects;
 
 public class NodeToColor implements NodeToMessage {
@@ -20,11 +17,9 @@ public class NodeToColor implements NodeToMessage {
 	}
 
 	@Override
-	public CompiledMessage apply(Node node) {
-		Message base = new Message();
-		base.setColor(color);
-		base.setText(XmlHelper.getNodeValue(node));
-		return CompiledMessage.wrap(base);
+	public Result apply(Node node, CompiledMessage base) {
+		base.base.setColor(color);
+		return Result.CONTINUE;
 	}
 
 }

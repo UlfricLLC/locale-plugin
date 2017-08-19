@@ -10,13 +10,16 @@ public enum NodeToForEach implements NodeToMessage {
 	INSTANCE;
 
 	@Override
-	public final CompiledMessage apply(Node node) {
+	public final Result apply(Node node, CompiledMessage base) {
 		NamedNodeMap nodes = node.getAttributes();
 		String listVariable = XmlHelper.getNodeValue(nodes.getNamedItem("value"));
 		String elementVariable = getNewDetailName(nodes, listVariable);
 		CompiledMessage delimiter = delimiter(nodes);
 
-		return new ForEachCompiledMessage(listVariable, elementVariable, delimiter);
+		CompiledMessage foreach = new ForEachCompiledMessage(listVariable, elementVariable, delimiter);
+		base.parts.add(foreach)
+
+		return Result.FINISHED;
 	}
 
 	private String getNewDetailName(NamedNodeMap map, String variable) {

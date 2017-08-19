@@ -2,19 +2,14 @@ package com.ulfric.etruscans.message;
 
 import org.w3c.dom.Node;
 
-import com.ulfric.commons.xml.XmlHelper;
-import com.ulfric.fancymessage.Message;
-
 public enum NodeToBold implements NodeToMessage {
 
 	INSTANCE;
 
 	@Override
-	public final CompiledMessage apply(Node node) {
-		Message base = new Message();
-		base.setBold(Boolean.TRUE);
-		base.setText(XmlHelper.getNodeValue(node));
-		return CompiledMessage.wrap(base);
+	public final Result apply(Node node, CompiledMessage base) {
+		base.base.setBold(Boolean.TRUE);
+		return Result.CONTINUE;
 	}
 
 }
