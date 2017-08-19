@@ -1,14 +1,18 @@
 package com.ulfric.etruscans.locale;
 
-import org.bukkit.entity.Player;
+import org.bukkit.command.CommandSender;
 
 import com.ulfric.andrew.Sender;
-import com.ulfric.etruscans.Messages;
+import com.ulfric.dragoon.extension.inject.Inject;
+import com.ulfric.etruscans.message.Messages;
+import com.ulfric.i18n.content.Details;
+import com.ulfric.servix.services.locale.LocaleService;
 import com.ulfric.servix.services.locale.TellService;
 
-import java.util.Map;
-
 public class MessagesTell implements TellService {
+
+	@Inject
+	private LocaleService locale;
 
 	@Override
 	public Class<TellService> getService() {
@@ -17,22 +21,36 @@ public class MessagesTell implements TellService {
 
 	@Override
 	public void send(Sender target, String message) {
-		Messages.send(target, message);
+		send(target, message, Details.none());
 	}
 
 	@Override
-	public void send(Player target, String message) {
-		Messages.send(target, message);
+	public void send(Sender target, String message, Details context) {
+		CommandSender display;
+
+		if (target instanceof CommandSender) {
+			display = (CommandSender) target;
+		} else {
+			Object handle = target.handle();
+
+			if (handle instanceof CommandSender) {
+				display = (CommandSender) handle;
+			} else {
+				return; // TODO log
+			}
+		}
+
+		send(display, message, context);
 	}
 
 	@Override
-	public void send(Sender target, String message, Map<String, String> context) {
-		Messages.send(target, message, context);
+	public void send(CommandSender target, String message) {
+		send(target, message, Details.none());
 	}
 
 	@Override
-	public void send(Player target, String message, Map<String, String> context) {
-		Messages.send(target, message, context);
+	public void send(CommandSender target, String message, Details context) {
+		Messages.send(message, target, context);
 	}
 
 }

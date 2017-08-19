@@ -2,7 +2,7 @@ package com.ulfric.etruscans.locale;
 
 import com.ulfric.data.config.Configured;
 import com.ulfric.data.config.Settings;
-import com.ulfric.servix.services.locale.Locale;
+import com.ulfric.servix.services.locale.BukkitLocale;
 import com.ulfric.servix.services.locale.LocaleService;
 
 @Configured
@@ -17,12 +17,12 @@ public class PathLocale implements LocaleService { // TODO different language su
 	}
 
 	@Override
-	public Locale getLocale(String code) {
+	public BukkitLocale getLocale(String code) {
 		return english; // TODO
 	}
 
 	@Override
-	public Locale defaultLocale() {
+	public BukkitLocale defaultLocale() {
 		return english;
 	}
 

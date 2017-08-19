@@ -3,6 +3,8 @@ package com.ulfric.etruscans.placeholder;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.ulfric.i18n.content.Detail;
+
 public abstract class PlayerPlaceholder extends Placeholder {
 
 	public PlayerPlaceholder(String name) {
@@ -10,10 +12,10 @@ public abstract class PlayerPlaceholder extends Placeholder {
 	}
 
 	@Override
-	public final String apply(CommandSender target) {
-		return target instanceof Player ? applyToPlayer((Player) target) : null;
+	public final Detail apply(CommandSender target) {
+		return target instanceof Player ? applyToPlayer((Player) target) : null; // TODO is it appropriate to return null?
 	}
 
-	public abstract String applyToPlayer(Player target);
+	public abstract Detail applyToPlayer(Player target);
 
 }

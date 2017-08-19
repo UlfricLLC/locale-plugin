@@ -3,8 +3,7 @@ package com.ulfric.etruscans.placeholder.defaults;
 import org.bukkit.entity.Player;
 
 import com.ulfric.etruscans.placeholder.PlayerPlaceholder;
-
-import java.text.NumberFormat;
+import com.ulfric.i18n.content.Detail;
 
 public class ExpLevelPlaceholder extends PlayerPlaceholder {
 
@@ -13,8 +12,8 @@ public class ExpLevelPlaceholder extends PlayerPlaceholder {
 	}
 
 	@Override
-	public String applyToPlayer(Player target) {
-		return NumberFormat.getInstance().format(target.getLevel());
+	public Detail applyToPlayer(Player target) {
+		return Detail.single(getName(), target.getLevel());
 	}
 
 }

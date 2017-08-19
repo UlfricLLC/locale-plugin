@@ -17,11 +17,11 @@ public class PlaceholderApplication extends Application {
 	}
 
 	private void register() {
-		Placeholder.register(placeholder);
+		com.ulfric.i18n.placeholder.Placeholder.register(placeholder);
 	}
 
 	private void unregister() {
-		Placeholder.unregister(placeholder);
+		com.ulfric.i18n.placeholder.Placeholder.unregister(placeholder);
 	}
 
 }
