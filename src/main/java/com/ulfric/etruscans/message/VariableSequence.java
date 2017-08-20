@@ -19,7 +19,7 @@ public final class VariableSequence extends Bean {
 			return new VariableSequence(variable, Collections.emptyList());
 		}
 
-		List<String> invokers = Arrays.asList(Arrays.copyOfRange(split, 1, split.length));
+		List<String> invokers = Collections.unmodifiableList(Arrays.asList(Arrays.copyOfRange(split, 1, split.length)));
 		return new VariableSequence(split[0], invokers);
 	}
 
@@ -36,7 +36,7 @@ public final class VariableSequence extends Bean {
 	}
 
 	public List<String> getInvokers() {
-		return invokers; // TODO exposing mutable from Arrays.asList
+		return invokers;
 	}
 
 	public Content transform(Content content) {

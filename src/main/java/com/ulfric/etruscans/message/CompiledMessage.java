@@ -9,28 +9,15 @@ import org.bukkit.command.CommandSender;
 import com.ulfric.commons.xml.XmlHelper;
 import com.ulfric.etruscans.message.Result.Continue;
 import com.ulfric.fancymessage.Message;
-import com.ulfric.i18n.content.Detail;
 import com.ulfric.i18n.content.Details;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class CompiledMessage implements MessagePart { // TODO flatten messages to save bandwidth
-
-	public static void main(String[] args) {
-		//CompiledMessage test = compile("<red>this is in red <green><bold>and this is green</bold></green><bold> but this is red</bold></red>");
-		//CompiledMessage test = compile("<hover value=\"Hovering over all\">Hover over me!</hover>");
-		CompiledMessage test = compile("<foreach value=\"vals\" delimiter=\"<yellow>, </yellow>\"><hover value=\"<gold>${val.uppercase}</gold>\">${val}</hover></foreach>");
-		//CompiledMessage test = compile("<blue><hover value=\"<red>Hovering</red>\">Hover over me</hover></blue>");
-		//CompiledMessage test = compile("${string}");
-		Details details = Details.of(Detail.single("vals", Arrays.asList("one", "two", "three")), Detail.single("string", "Hello World"));
-		Message display = test.toMessage(null, details);
-		System.out.println(display);
-	}
+public class CompiledMessage implements MessagePart {
 
 	private static final Map<String, Appender> APPENDERS = new HashMap<>();
 
@@ -93,15 +80,14 @@ public class CompiledMessage implements MessagePart { // TODO flatten messages t
 				}
 			}
 		} else {
-			System.out.println("ERR " + message.getNodeName());
-			// TODO handle;
+			throw new IllegalArgumentException("Cannot handle " + message.getNodeName());
 		}
 	}
 
 	final Message base;
 	private final List<MessagePart> parts;
 
-	protected CompiledMessage() { // TODO
+	protected CompiledMessage() {
 		this.base = new Message();
 		this.base.setText("");
 		this.parts = new ArrayList<>();
