@@ -24,9 +24,10 @@ public class CompiledMessage implements MessagePart { // TODO flatten messages t
 	public static void main(String[] args) {
 		//CompiledMessage test = compile("<red>this is in red <green><bold>and this is green</bold></green><bold> but this is red</bold></red>");
 		//CompiledMessage test = compile("<hover value=\"Hovering over all\">Hover over me!</hover>");
-		//CompiledMessage test = compile("<foreach value=\"vals\">${val}</foreach>");
-		CompiledMessage test = compile("<blue><hover value=\"<red>Hovering</red>\">Hover over me</hover></blue>");
-		Details details = Details.of(Detail.single("vals", Arrays.asList("one", "two", "three")));
+		CompiledMessage test = compile("<foreach value=\"vals\" delimiter=\"<yellow>, </yellow>\"><hover value=\"<gold>${val.uppercase}</gold>\">${val}</hover></foreach>");
+		//CompiledMessage test = compile("<blue><hover value=\"<red>Hovering</red>\">Hover over me</hover></blue>");
+		//CompiledMessage test = compile("${string}");
+		Details details = Details.of(Detail.single("vals", Arrays.asList("one", "two", "three")), Detail.single("string", "Hello World"));
 		Message display = test.toMessage(null, details);
 		System.out.println(display);
 	}
@@ -43,6 +44,7 @@ public class CompiledMessage implements MessagePart { // TODO flatten messages t
 		APPENDERS.put("url", new UrlAppender());
 		APPENDERS.put("suggest", new SuggestAppender());
 		APPENDERS.put("command", new CommandAppender());
+		APPENDERS.put("foreach", ForEachAppender.INSTANCE);
 		APPENDERS.put("doc", SkipAppender.INSTANCE);
 		registerColorAppenders();
 	}
@@ -132,7 +134,7 @@ public class CompiledMessage implements MessagePart { // TODO flatten messages t
 		return child;
 	}
 
-	protected void addChild(CompiledMessage child) {
+	protected void addChild(MessagePart child) {
 		Objects.requireNonNull(child, "child");
 		parts.add(child);
 	}
