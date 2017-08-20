@@ -3,29 +3,46 @@ package com.ulfric.etruscans.locale;
 import org.bukkit.command.CommandSender;
 
 import com.ulfric.commons.value.Bean;
-import com.ulfric.etruscans.message.Messages;
+import com.ulfric.etruscans.internal.PermissionlessSender;
+import com.ulfric.etruscans.message.CompiledMessage;
+import com.ulfric.fancymessage.Message;
 import com.ulfric.i18n.content.Details;
 import com.ulfric.servix.services.locale.BukkitLocale;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class SimpleLocale extends Bean implements BukkitLocale { // TODO better name
 
+	private transient final Map<String, CompiledMessage> compiled = new HashMap<>();
+
 	private Map<String, String> messages;
 
-	@Override
-	public String getMessage(String key) {
+	private CompiledMessage lookup(String key) {
+		return compiled.computeIfAbsent(key, this::compileKey);
+	}
+
+	private CompiledMessage compileKey(String key) {
+		return CompiledMessage.compile(lookupRaw(key));
+	}
+
+	private String lookupRaw(String key) {
 		return messages == null ? key : messages.getOrDefault(key, key);
 	}
 
 	@Override
-	public String getMessage(CommandSender target, String key) {
-		return getMessage(target, key, Details.none());
+	public Message getMessage(String key) {
+		return getMessage(PermissionlessSender.INSTANCE, key);
 	}
 
 	@Override
-	public String getMessage(CommandSender target, String key, Details details) {
-		return Messages.format(getMessage(key), target, details);
+	public Message getMessage(CommandSender display, String key) {
+		return getMessage(display, key, Details.none());
+	}
+
+	@Override
+	public Message getMessage(CommandSender display, String key, Details details) {
+		return lookup(key).toMessage(display, details);
 	}
 	
 }
