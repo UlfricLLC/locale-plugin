@@ -7,12 +7,12 @@ import com.ulfric.etruscans.internal.PermissionlessSender;
 import com.ulfric.etruscans.message.CompiledMessage;
 import com.ulfric.fancymessage.Message;
 import com.ulfric.i18n.content.Details;
-import com.ulfric.servix.services.locale.BukkitLocale;
+import com.ulfric.servix.services.locale.BukkitMessageLocale;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class SimpleLocale extends Bean implements BukkitLocale { // TODO better name
+public class SimpleLocale extends Bean implements BukkitMessageLocale { // TODO better name
 
 	private transient final Map<String, CompiledMessage> compiled = new HashMap<>();
 
