@@ -17,10 +17,10 @@ public enum TextAppender implements Appender {
 	private final Pattern placeholder = Pattern.compile("\\$\\{[a-zA-Z0-9_.]+\\}");
 
 	@Override
-	public Result apply(Node append, CompiledMessage to) {
+	public CompiledMessage apply(Node append, CompiledMessage to) {
 		String message = XmlHelper.getNodeValue(append);
 		if (StringUtils.isEmpty(message)) {
-			return new Result.Continue(); // TODO optimize, remove object creation
+			return to;
 		}
 
 		Matcher variables = placeholder.matcher(message);
@@ -42,22 +42,21 @@ public enum TextAppender implements Appender {
 				to.addChild(new PlaceholderMessagePart(variable));
 			} while (variables.find());
 
-			return new Result.Continue();
+			return to;
 		}
 
 		return applyRaw(message, to);
 	}
 
-	private Result applyRaw(String raw, CompiledMessage to) {
+	private CompiledMessage applyRaw(String raw, CompiledMessage to) {
 		if (StringUtils.isEmpty(to.base.getText())) {
 			to.base.setText(raw);
-			return new Result.Continue(); // TODO optimize, remove object creation
+			return to;
 		}
 
 		CompiledMessage continuation = to.createChild();
 		continuation.base.setText(raw);
-
-		return new Result.Continue(continuation);
+		return continuation;
 	}
 
 }

@@ -7,8 +7,8 @@ public enum SkipAppender implements Appender {
 	INSTANCE;
 
 	@Override
-	public Result apply(Node append, CompiledMessage to) {
-		return new Result.Continue();
+	public CompiledMessage apply(Node append, CompiledMessage to) {
+		return to;
 	}
 
 }

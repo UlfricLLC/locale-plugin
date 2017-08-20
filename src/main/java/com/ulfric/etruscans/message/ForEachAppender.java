@@ -10,7 +10,7 @@ public enum ForEachAppender implements Appender {
 	INSTANCE;
 
 	@Override
-	public Result apply(Node append, CompiledMessage to) {
+	public CompiledMessage apply(Node append, CompiledMessage to) {
 		NamedNodeMap nodes = append.getAttributes();
 		String listVariable = XmlHelper.getNodeValue(nodes.getNamedItem("value"));
 		String elementVariable = getNewDetailName(nodes, listVariable);
@@ -18,8 +18,7 @@ public enum ForEachAppender implements Appender {
 
 		CompiledMessage continuation = new ForEachCompiledMessage(listVariable, elementVariable, delimiter);
 		to.addChild(continuation);
-
-		return new Result.Continue(continuation);
+		return continuation;
 	}
 
 	private String getNewDetailName(NamedNodeMap map, String variable) {

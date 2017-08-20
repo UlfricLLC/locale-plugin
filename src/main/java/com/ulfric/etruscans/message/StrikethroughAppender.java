@@ -7,16 +7,15 @@ public enum StrikethroughAppender implements Appender {
 	INSTANCE;
 
 	@Override
-	public Result apply(Node append, CompiledMessage to) {
+	public CompiledMessage apply(Node append, CompiledMessage to) {
 		if (to.base.getStrikethrough() == null) {
 			to.base.setStrikethrough(Boolean.TRUE);
-			return new Result.Continue(); // TODO optimize, remove object creation
+			return to;
 		}
 
 		CompiledMessage continuation = to.createChild();
 		continuation.base.setStrikethrough(Boolean.TRUE);
-
-		return new Result.Continue(continuation);
+		return continuation;
 	}
 
 }

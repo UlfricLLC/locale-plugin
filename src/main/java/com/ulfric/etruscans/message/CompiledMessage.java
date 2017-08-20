@@ -7,7 +7,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 import com.ulfric.commons.xml.XmlHelper;
-import com.ulfric.etruscans.message.Result.Continue;
 import com.ulfric.fancymessage.Message;
 import com.ulfric.i18n.content.Details;
 
@@ -66,18 +65,10 @@ public class CompiledMessage implements MessagePart {
 		Appender appender = APPENDERS.get(message.getNodeName().toLowerCase());
 
 		if (appender != null) {
-			Result result = appender.apply(message, base);
+			base = appender.apply(message, base);
 
-			if (result instanceof Result.Continue) {
-				Result.Continue continues = (Continue) result;
-				CompiledMessage continuation = continues.getContinuation();
-				if (continuation == null) {
-					continuation = base;
-				}
-
-				for (Node child : XmlHelper.asList(message.getChildNodes())) {
-					append(continuation, child);
-				}
+			for (Node child : XmlHelper.asList(message.getChildNodes())) {
+				append(base, child);
 			}
 		} else {
 			throw new IllegalArgumentException("Cannot handle " + message.getNodeName());

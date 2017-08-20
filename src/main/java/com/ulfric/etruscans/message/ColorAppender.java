@@ -17,16 +17,15 @@ public class ColorAppender implements Appender {
 	}
 
 	@Override
-	public Result apply(Node append, CompiledMessage to) {
+	public CompiledMessage apply(Node append, CompiledMessage to) {
 		if (to.base.getColor() == null) {
 			to.base.setColor(color);
-			return new Result.Continue(); // TODO optimize, remove object creation
+			return to;
 		}
 
 		CompiledMessage continuation = to.createChild();
 		continuation.base.setColor(color);
-
-		return new Result.Continue(continuation);
+		return continuation;
 	}
 
 }

@@ -11,16 +11,16 @@ import java.util.stream.Collectors;
 public abstract class EventAppender implements Appender {
 
 	@Override
-	public Result apply(Node append, CompiledMessage to) {
+	public CompiledMessage apply(Node append, CompiledMessage to) {
 		List<CompiledMessage> eventValue = eventValue(append);
 
 		if (eventValue == null) {
-			return new Result.Continue();
+			return to;
 		}
 
 		CompiledMessage hover = createEventMessage(eventValue);
 		to.addChild(hover);
-		return new Result.Continue(hover);
+		return hover;
 	}
 
 	private List<CompiledMessage> eventValue(Node base) {
