@@ -4,6 +4,6 @@ import org.w3c.dom.Node;
 
 import java.util.function.BiFunction;
 
-interface NodeToMessage extends BiFunction<Node, CompiledMessage, Result> {
+public interface Appender extends BiFunction<Node, CompiledMessage, Result> {
 
 }

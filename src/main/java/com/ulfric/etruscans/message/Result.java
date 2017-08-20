@@ -1,8 +1,21 @@
 package com.ulfric.etruscans.message;
 
-enum Result {
+interface Result { // TODO better results system
 
-	CONTINUE,
-	FINISHED;
+	class Continue implements Result {
+		private final CompiledMessage base;
+
+		Continue() {
+			this(null);
+		}
+
+		Continue(CompiledMessage base) {
+			this.base = base;
+		}
+
+		public CompiledMessage getContinuation() {
+			return base;
+		}
+	}
 
 }

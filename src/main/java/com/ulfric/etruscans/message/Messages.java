@@ -4,7 +4,7 @@ import org.bukkit.command.CommandSender;
 
 import com.ulfric.i18n.content.Details;
 
-public class Messages {
+public class Messages { // TODO
 
 	public static void send(String message, CommandSender sender, Details details) {
 		
