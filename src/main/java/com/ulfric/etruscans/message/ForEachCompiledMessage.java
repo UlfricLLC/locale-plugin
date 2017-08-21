@@ -14,11 +14,11 @@ import java.util.Objects;
 
 public class ForEachCompiledMessage extends CompiledMessage {
 
-	private final String elements;
+	private final VariableSequence elements;
 	private final String element;
 	private final MessagePart delimiter;
 
-	public ForEachCompiledMessage(String elements, String element, MessagePart delimiter) {
+	public ForEachCompiledMessage(VariableSequence elements, String element, MessagePart delimiter) {
 		Objects.requireNonNull(elements, "elements");
 		Objects.requireNonNull(element, "element");
 
@@ -29,7 +29,7 @@ public class ForEachCompiledMessage extends CompiledMessage {
 
 	@Override
 	public Message toMessage(CommandSender display, Details details) { // TODO break method up, much too complex
-		Detail existing = details.get(elements);
+		Detail existing = details.get(elements.getVariable());
 		if (existing == null) {
 			return super.toMessage(display, details);
 		}
@@ -47,7 +47,11 @@ public class ForEachCompiledMessage extends CompiledMessage {
 
 		int lastIndex = contentSize - 1;
 		for (int x = 0; x < contentSize; x++) {
-			Content element = content.get(x);
+			Content element = elements.transform(content.get(x));
+			if (element == null) {
+				continue;
+			}
+
 			Object potentialIterable = element.getValue();
 
 			if (potentialIterable instanceof Iterable) {
