@@ -2,7 +2,6 @@ package com.ulfric.etruscans.locale;
 
 import org.bukkit.command.CommandSender;
 
-import com.ulfric.andrew.Sender;
 import com.ulfric.dragoon.extension.inject.Inject;
 import com.ulfric.i18n.content.Details;
 import com.ulfric.servix.services.locale.BukkitMessageLocale;
@@ -17,30 +16,6 @@ public class MessagesTell implements TellService {
 	@Override
 	public Class<TellService> getService() {
 		return TellService.class;
-	}
-
-	@Override
-	public void send(Sender target, String message) {
-		send(target, message, Details.none());
-	}
-
-	@Override
-	public void send(Sender target, String message, Details context) {
-		CommandSender display;
-
-		if (target instanceof CommandSender) {
-			display = (CommandSender) target;
-		} else {
-			Object handle = target.handle();
-
-			if (handle instanceof CommandSender) {
-				display = (CommandSender) handle;
-			} else {
-				return; // TODO log
-			}
-		}
-
-		send(display, message, context);
 	}
 
 	@Override
