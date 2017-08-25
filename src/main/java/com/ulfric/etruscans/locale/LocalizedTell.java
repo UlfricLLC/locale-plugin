@@ -8,7 +8,7 @@ import com.ulfric.servix.services.locale.BukkitMessageLocale;
 import com.ulfric.servix.services.locale.LocaleService;
 import com.ulfric.servix.services.locale.TellService;
 
-public class MessagesTell implements TellService {
+public class LocalizedTell implements TellService {
 
 	@Inject
 	private LocaleService locale;
