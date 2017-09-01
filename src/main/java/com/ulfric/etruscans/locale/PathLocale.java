@@ -1,16 +1,28 @@
 package com.ulfric.etruscans.locale;
 
 import com.ulfric.data.config.ConfigType;
+import com.ulfric.data.config.Configuration;
 import com.ulfric.data.config.Configured;
 import com.ulfric.data.config.Settings;
+import com.ulfric.servix.ServiceApplication;
 import com.ulfric.servix.services.locale.BukkitMessageLocale;
 import com.ulfric.servix.services.locale.LocaleService;
 
 @Configured
-public class PathLocale implements LocaleService { // TODO different language support
+public class PathLocale extends ServiceApplication implements LocaleService { // TODO different language support
 
-	@Settings(type = ConfigType.PROPERTIES)
+	@Settings(type = ConfigType.PROPERTIES, handleField = "handle")
 	private SimpleLocale english;
+
+	private Configuration handle;
+
+	public PathLocale() {
+		addBootHook(() -> { // TODO currently reloading this container will cause this subscription to be added twice
+			handle.subscribe(english::clearCompiled);
+		});
+
+		addShutdownHook(english::clearCompiled);
+	}
 
 	@Override
 	public Class<LocaleService> getService() {

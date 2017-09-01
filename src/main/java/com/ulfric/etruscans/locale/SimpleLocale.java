@@ -44,5 +44,9 @@ public class SimpleLocale extends Bean implements BukkitMessageLocale { // TODO 
 	public Message getMessage(CommandSender display, String key, Details details) {
 		return lookup(key).toMessage(display, details);
 	}
-	
+
+	public void clearCompiled() {
+		compiled.clear();
+	}
+
 }
