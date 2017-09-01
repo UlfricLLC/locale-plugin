@@ -55,7 +55,7 @@ public class ForEachCompiledMessage extends CompiledMessage {
 			Object potentialIterable = element.getValue();
 
 			if (potentialIterable instanceof Iterable) {
-				List<?> iterable = ListHelper.asList((Iterable<?>) potentialIterable);
+				List<?> iterable = ListHelper.iterableAsList((Iterable<?>) potentialIterable);
 				int iterableSize = iterable.size();
 				int iterableLastIndex = iterableSize - 1;
 				for (int y = 0; y < iterableSize; y++) {
