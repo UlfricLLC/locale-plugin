@@ -17,9 +17,7 @@ public class PathLocale extends ServiceApplication implements LocaleService { //
 	private Configuration handle;
 
 	public PathLocale() {
-		addBootHook(() -> { // TODO currently reloading this container will cause this subscription to be added twice
-			handle.subscribe(english::clearCompiled);
-		});
+		addBootHook(() -> handle.subscribe(english::clearCompiled)); // TODO currently reloading this container will cause this subscription to be added twice
 
 		addShutdownHook(english::clearCompiled);
 	}
