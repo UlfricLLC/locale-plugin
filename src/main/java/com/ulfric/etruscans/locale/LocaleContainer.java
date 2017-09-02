@@ -7,6 +7,7 @@ public class LocaleContainer extends Container {
 	public LocaleContainer() {
 		install(PathLocale.class);
 		install(LocalizedTell.class);
+		install(LocalizedInput.class);
 	}
 
 }
