@@ -13,7 +13,7 @@ public class ExpLevelPlaceholder extends PlayerPlaceholder {
 
 	@Override
 	public Detail applyToPlayer(Player target) {
-		return Detail.single(getName(), target.getLevel());
+		return Detail.of(getName(), target.getLevel());
 	}
 
 }
