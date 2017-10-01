@@ -10,7 +10,7 @@
 		<version>1.0.0</version>
 	</parent>
 
-	<groupId>com.ulfric.bukkit</groupId>
+	<groupId>com.ulfric.plugin</groupId>
 	<artifactId>locale-plugin</artifactId>
 	<version>1.0.0</version>
 

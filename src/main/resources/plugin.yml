@@ -1,0 +1,6 @@
+name: Locale
+main: com.ulfric.plugin.locale.LocalePlugin
+version: 1.0.0
+author: Ulfric LLC
+load: STARTUP
+depends: [Platform, Data, Services]
