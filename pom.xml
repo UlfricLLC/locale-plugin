@@ -19,18 +19,21 @@
 			<groupId>com.ulfric.i18n</groupId>
 			<artifactId>i18n</artifactId>
 			<version>1.0.0</version>
+			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
-			<groupId>com.ulfric.dragoon</groupId>
-			<artifactId>conf4j-dragoon</artifactId>
+			<groupId>com.ulfric.plugin</groupId>
+			<artifactId>data-plugin</artifactId>
 			<version>1.0.0</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>com.ulfric.plugin</groupId>
 			<artifactId>services-plugin</artifactId>
 			<version>1.0.0</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
