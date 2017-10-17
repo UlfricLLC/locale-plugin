@@ -12,8 +12,8 @@ public class PathLocale extends ServiceApplication implements LocaleService { //
 
 	public static final String DEFAULT_LOCALE_CODE = Locale.getDefault().toLanguageTag().replace('-', '_');
 
-	@Settings(appendExtension = false)
-	private LocaleConfigurationBean locales;
+	@Settings
+	private LocaleConfigurationBean messages;
 
 	private final Map<String, BukkitMessageLocale> compiledLocales = MapHelper.newConcurrentMap(4);
 
@@ -29,7 +29,7 @@ public class PathLocale extends ServiceApplication implements LocaleService { //
 	@Override
 	public BukkitMessageLocale getLocale(String code) {
 		return compiledLocales.computeIfAbsent(code.replace('-', '_'), localeName -> {
-			Map<String, String> messages = locales.messages().get(localeName);
+			Map<String, String> messages = this.messages.messages().get(localeName);
 
 			if (messages == null) {
 				if (DEFAULT_LOCALE_CODE.equals(localeName)) {
