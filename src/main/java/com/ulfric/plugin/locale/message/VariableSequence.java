@@ -19,29 +19,29 @@ public final class VariableSequence extends Bean {
 			return new VariableSequence(variable, Collections.emptyList());
 		}
 
-		List<String> invokers = Collections.unmodifiableList(Arrays.asList(Arrays.copyOfRange(split, 1, split.length)));
-		return new VariableSequence(split[0], invokers);
+		List<String> functions = Collections.unmodifiableList(Arrays.asList(Arrays.copyOfRange(split, 1, split.length)));
+		return new VariableSequence(split[0], functions);
 	}
 
 	private final String variable;
-	private final List<String> invokers;
+	private final List<String> functions;
 
-	private VariableSequence(String variable, List<String> invokers) {
+	private VariableSequence(String variable, List<String> functions) {
 		this.variable = variable;
-		this.invokers = invokers;
+		this.functions = functions;
 	}
 
 	public String getVariable() {
 		return variable;
 	}
 
-	public List<String> getInvokers() {
-		return invokers;
+	public List<String> getFunctions() {
+		return functions;
 	}
 
 	public Content transform(Content content) {
-		for (String invoker : invokers) {
-			content = content.invoke(invoker);
+		for (String function : functions) {
+			content = content.invoke(function);
 		}
 
 		return content;
