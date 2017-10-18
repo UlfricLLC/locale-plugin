@@ -1,20 +1,19 @@
 package com.ulfric.plugin.locale.message;
 
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-
-import org.bukkit.ChatColor;
-import org.bukkit.command.CommandSender;
-
-import com.ulfric.commons.xml.XmlHelper;
-import com.ulfric.fancymessage.Message;
-import com.ulfric.i18n.content.Details;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
+import com.ulfric.commons.xml.XmlHelper;
+import com.ulfric.fancymessage.Message;
+import com.ulfric.i18n.content.Details;
 
 public class CompiledMessage implements MessagePart {
 
@@ -26,6 +25,7 @@ public class CompiledMessage implements MessagePart {
 		APPENDERS.put("underlined", UnderlinedAppender.INSTANCE);
 		APPENDERS.put("italic", ItalicAppender.INSTANCE);
 		APPENDERS.put("obfuscated", ObfuscatedAppender.INSTANCE);
+		APPENDERS.put("bold", BoldAppender.INSTANCE);
 		APPENDERS.put("hover", new HoverAppender());
 		APPENDERS.put("url", new UrlAppender());
 		APPENDERS.put("suggest", new SuggestAppender());
@@ -80,7 +80,6 @@ public class CompiledMessage implements MessagePart {
 
 	protected CompiledMessage() {
 		this.base = new Message();
-		this.base.setText("");
 		this.parts = new ArrayList<>();
 	}
 
@@ -88,7 +87,7 @@ public class CompiledMessage implements MessagePart {
 	public Message toMessage(CommandSender display, Details details) {
 		Message base = createBase();
 
-		if (parts.isEmpty()) {
+		if (!hasChildren()) {
 			return base;
 		}
 
@@ -114,6 +113,10 @@ public class CompiledMessage implements MessagePart {
 	protected void addChild(MessagePart child) {
 		Objects.requireNonNull(child, "child");
 		parts.add(child);
+	}
+
+	protected boolean hasChildren() {
+		return !parts.isEmpty();
 	}
 
 }

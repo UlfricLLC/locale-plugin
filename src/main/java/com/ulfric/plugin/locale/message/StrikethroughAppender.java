@@ -8,7 +8,7 @@ public enum StrikethroughAppender implements Appender {
 
 	@Override
 	public CompiledMessage apply(Node append, CompiledMessage to) {
-		if (to.base.getStrikethrough() == null) {
+		if (to.base.getStrikethrough() == null && !to.hasChildren()) {
 			to.base.setStrikethrough(Boolean.TRUE);
 			return to;
 		}

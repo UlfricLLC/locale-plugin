@@ -20,7 +20,14 @@ public final class ImportMessagePart implements MessagePart {
 
 	@Override
 	public Message toMessage(CommandSender display, Details details) {
-		return LocaleService.getMessage(display, variable, details);
+		Message message = LocaleService.getMessage(display, variable, details);
+
+		if (message == null) {
+			message = new Message();
+			message.setText(variable);
+		}
+
+		return message;
 	}
 
 }

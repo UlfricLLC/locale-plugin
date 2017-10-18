@@ -32,6 +32,7 @@ public enum TextAppender implements Appender {
 				if (!text.isEmpty()) {
 					Message child = new Message();
 					child.setText(text);
+					
 					to.addChild(new PlainMessagePart(child));
 				}
 				textStart = variables.end();
@@ -44,6 +45,13 @@ public enum TextAppender implements Appender {
 				}
 			} while (variables.find());
 
+			String text = message.substring(textStart);
+			if (!text.isEmpty()) {
+				Message child = new Message();
+				child.setText(text);
+				to.addChild(new PlainMessagePart(child));
+			}
+
 			return to;
 		}
 
@@ -51,7 +59,7 @@ public enum TextAppender implements Appender {
 	}
 
 	private CompiledMessage applyRaw(String raw, CompiledMessage to) {
-		if (StringUtils.isEmpty(to.base.getText())) {
+		if (StringUtils.isEmpty(to.base.getText()) && !to.hasChildren()) {
 			to.base.setText(raw);
 			return to;
 		}

@@ -8,7 +8,7 @@ public enum ItalicAppender implements Appender {
 
 	@Override
 	public CompiledMessage apply(Node append, CompiledMessage to) {
-		if (to.base.getItalic() == null) {
+		if (to.base.getItalic() == null && !to.hasChildren()) {
 			to.base.setItalic(Boolean.TRUE);
 			return to;
 		}

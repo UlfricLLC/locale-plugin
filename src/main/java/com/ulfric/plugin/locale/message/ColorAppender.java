@@ -18,7 +18,7 @@ public class ColorAppender implements Appender {
 
 	@Override
 	public CompiledMessage apply(Node append, CompiledMessage to) {
-		if (to.base.getColor() == null) {
+		if (to.base.getColor() == null && !to.hasChildren()) {
 			to.base.setColor(color);
 			return to;
 		}
