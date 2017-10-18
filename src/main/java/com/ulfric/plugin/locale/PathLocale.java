@@ -1,12 +1,14 @@
 package com.ulfric.plugin.locale;
 
-import com.ulfric.commons.collection.MapHelper;
-import com.ulfric.dragoon.conf4j.Settings;
-import com.ulfric.plugin.services.ServiceApplication;
-
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
+import java.util.logging.Logger;
+
+import com.ulfric.commons.collection.MapHelper;
+import com.ulfric.dragoon.conf4j.Settings;
+import com.ulfric.dragoon.extension.inject.Inject;
+import com.ulfric.plugin.services.ServiceApplication;
 
 public class PathLocale extends ServiceApplication implements LocaleService { // TODO different language support
 
@@ -15,10 +17,25 @@ public class PathLocale extends ServiceApplication implements LocaleService { //
 	@Settings
 	private LocaleConfigurationBean messages;
 
+	@Inject(optional = true)
+	private Logger logger;
+
 	private final Map<String, BukkitMessageLocale> compiledLocales = MapHelper.newConcurrentMap(4);
 
 	public PathLocale() {
 		addShutdownHook(compiledLocales::clear);
+		addBootHook(() -> {
+			if (logger != null) {
+				int messages = this.messages.messages().values().stream().mapToInt(Map::size).sum();
+				if (messages == 0) {
+					logger.warning("No locale messages loaded");
+				} else if (messages == 1) {
+					logger.info("Loaded 1 locale message");
+				} else {
+					logger.info("Loaded " + messages + " locale messages");
+				}
+			}
+		});
 	}
 
 	@Override
