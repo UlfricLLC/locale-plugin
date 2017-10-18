@@ -24,12 +24,7 @@ public class LocalizedTell implements TellService {
 	@Override
 	public void send(CommandSender display, String message, Details details) {
 		BukkitMessageLocale locale = this.locale.defaultLocale(); // TODO using default locale
-		try {
-			System.out.println("H: " + Message.toLegacy(locale.getMessage(display, message, details)));
-			display.sendMessage(locale.getMessage(display, message, details));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		display.sendMessage(locale.getMessage(display, message, details));
 	}
 
 }
