@@ -80,6 +80,7 @@ public class CompiledMessage implements MessagePart {
 
 	protected CompiledMessage() {
 		this.base = new Message();
+		this.base.setText("");
 		this.parts = new ArrayList<>();
 	}
 

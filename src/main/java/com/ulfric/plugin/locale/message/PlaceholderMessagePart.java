@@ -28,7 +28,7 @@ public final class PlaceholderMessagePart implements MessagePart {
 	}
 
 	@Override
-	public Message toMessage(CommandSender display, Details details) { // TODO cleanup this methid, it's too complex
+	public Message toMessage(CommandSender display, Details details) { // TODO cleanup
 		Detail detail = details.get(variable.getVariable());
 		if (detail == null) {
 			detail = detailFromPlaceholder(display);

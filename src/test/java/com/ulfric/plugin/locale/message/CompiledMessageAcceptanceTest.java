@@ -35,6 +35,24 @@ class CompiledMessageAcceptanceTest {
 		Truth.assertThat(compiled(text)).isEqualTo("&c&lhello world");
 	}
 
+	@Test
+	void testCompiledMessageDetail() {
+		String text = "the value is ${value}";
+		Truth.assertThat(compiled(text, Details.of("value", "hello"))).isEqualTo("the value is hello");
+	}
+
+	@Test
+	void testCompiledMessageDetailStandalone() {
+		String text = "${value}";
+		Truth.assertThat(compiled(text, Details.of("value", "hello"))).isEqualTo("hello");
+	}
+
+	@Test
+	void testCompiledMessageDetailStandaloneUppercase() {
+		String text = "${value.uppercase}";
+		Truth.assertThat(compiled(text, Details.of("value", "hello"))).isEqualTo("HELLO");
+	}
+
 	/*
 	@Test
 	void testCompiledMessageRedInBlue() {
@@ -45,7 +63,11 @@ class CompiledMessageAcceptanceTest {
 	*/
 
 	private String compiled(String text) {
-		return Message.toLegacy(CompiledMessage.compile(text).toMessage(Mockito.mock(CommandSender.class), Details.none())).replace(ChatColor.COLOR_CHAR, '&');
+		return compiled(text, Details.none());
+	}
+
+	private String compiled(String text, Details details) {
+		return Message.toLegacy(CompiledMessage.compile(text).toMessage(Mockito.mock(CommandSender.class), details)).replace(ChatColor.COLOR_CHAR, '&');
 	}
 
 }
