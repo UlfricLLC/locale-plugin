@@ -3,7 +3,6 @@ package com.ulfric.plugin.locale;
 import org.bukkit.command.CommandSender;
 
 import com.ulfric.dragoon.extension.inject.Inject;
-import com.ulfric.fancymessage.Message;
 import com.ulfric.i18n.content.Details;
 
 public class LocalizedTell implements TellService {
