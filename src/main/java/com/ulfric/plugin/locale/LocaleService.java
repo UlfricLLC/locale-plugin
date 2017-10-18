@@ -1,5 +1,6 @@
 package com.ulfric.plugin.locale;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.ulfric.fancymessage.Message;
@@ -12,17 +13,20 @@ public interface LocaleService extends Service<LocaleService> {
 		return Service.get(LocaleService.class);
 	}
 
-	static BukkitMessageLocale getLocale(Player player) {
+	static BukkitMessageLocale getLocale(CommandSender target) {
 		LocaleService service = get();
 
 		if (service == null) {
 			return null;
 		}
 
-		return service.getLocale(player.getLocale());
+		if (target instanceof Player) {
+			service.getLocale(((Player) target).getLocale());
+		}
+		return service.defaultLocale();
 	}
 
-	static Message getMessage(Player target, String key) {
+	static Message getMessage(CommandSender target, String key) {
 		BukkitMessageLocale locale = getLocale(target);
 
 		if (locale == null) {
@@ -32,7 +36,7 @@ public interface LocaleService extends Service<LocaleService> {
 		return locale.getMessage(target, key);
 	}
 
-	static Message getMessage(Player target, String key, Details details) {
+	static Message getMessage(CommandSender target, String key, Details details) {
 		BukkitMessageLocale locale = getLocale(target);
 
 		if (locale == null) {

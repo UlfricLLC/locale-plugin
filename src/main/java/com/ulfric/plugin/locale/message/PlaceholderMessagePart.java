@@ -15,10 +15,6 @@ import java.util.Objects;
 
 public final class PlaceholderMessagePart implements MessagePart {
 
-	private static String stripVariableBoilerplate(String variable) {
-		return variable.substring("${".length(), variable.length() - "}".length());
-	}
-
 	private final VariableSequence variable;
 	private final String raw;
 	private final Lazy<Placeholder> placeholder;
@@ -27,7 +23,7 @@ public final class PlaceholderMessagePart implements MessagePart {
 		Objects.requireNonNull(variable, "variable");
 
 		this.raw = variable;
-		this.variable = VariableSequence.of(stripVariableBoilerplate(variable));
+		this.variable = VariableSequence.of(variable);
 		this.placeholder = Lazy.ofRetrying(() -> Placeholder.get(this.variable.getVariable()));
 	}
 

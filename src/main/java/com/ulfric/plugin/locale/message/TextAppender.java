@@ -14,7 +14,7 @@ public enum TextAppender implements Appender {
 
 	INSTANCE;
 
-	private final Pattern placeholder = Pattern.compile("\\$\\{[a-zA-Z0-9_.]+\\}");
+	private final Pattern placeholder = Pattern.compile("\\$\\{([a-zA-Z0-9\\_\\.]+|import [a-zA-Z-]+)\\}");
 
 	@Override
 	public CompiledMessage apply(Node append, CompiledMessage to) {
@@ -25,8 +25,6 @@ public enum TextAppender implements Appender {
 
 		Matcher variables = placeholder.matcher(message);
 		if (variables.find()) {
-			
-
 			int textStart = 0;
 			do {
 				String text = message.substring(textStart, variables.start());
@@ -38,8 +36,12 @@ public enum TextAppender implements Appender {
 				}
 				textStart = variables.end();
 
-				String variable = variables.group();
-				to.addChild(new PlaceholderMessagePart(variable));
+				String variable = variables.group(1);
+				if (variable.startsWith("import ")) {
+					to.addChild(new ImportMessagePart(variable.substring("import ".length())));
+				} else {
+					to.addChild(new PlaceholderMessagePart(variable));
+				}
 			} while (variables.find());
 
 			return to;
