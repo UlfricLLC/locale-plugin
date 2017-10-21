@@ -51,8 +51,20 @@ public class CompiledMessage implements MessagePart {
 	}
 
 	public static CompiledMessage compile(String message) {
+		// TODO actually support color schemes
+		message = temporaryHackForColorSchemes(message);
+
 		Element root = XmlHelper.parseHumanDocument(message).getDocumentElement();
 		return compile(root);
+	}
+
+	private static String temporaryHackForColorSchemes(String message) {
+		return message.replace("primary>", "gray>")
+				.replace("secondary>", "blue>")
+				.replace("tertiary>", "gold>")
+				.replace("danger-primary>", "red>")
+				.replace("danger-secondary>", "yellow>")
+				.replace("danger-tertiary>", "darkred>");
 	}
 
 	static CompiledMessage compile(Node message) {
