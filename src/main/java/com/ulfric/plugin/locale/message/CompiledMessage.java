@@ -59,12 +59,12 @@ public class CompiledMessage implements MessagePart {
 	}
 
 	private static String temporaryHackForColorSchemes(String message) {
-		return message.replace("primary>", "gray>")
-				.replace("secondary>", "blue>")
-				.replace("tertiary>", "gold>")
-				.replace("danger-primary>", "red>")
+		return message.replace("danger-primary>", "red>")
 				.replace("danger-secondary>", "yellow>")
-				.replace("danger-tertiary>", "darkred>");
+				.replace("danger-tertiary>", "darkred>")
+				.replace("primary>", "gray>")
+				.replace("secondary>", "blue>")
+				.replace("tertiary>", "gold>");
 	}
 
 	static CompiledMessage compile(Node message) {
