@@ -7,7 +7,7 @@ import com.ulfric.commons.xml.XmlHelper;
 
 import java.util.Objects;
 
-public enum ForEachAppender implements Appender { // TODO support functions
+public enum ForEachAppender implements Appender {
 
 	INSTANCE;
 
