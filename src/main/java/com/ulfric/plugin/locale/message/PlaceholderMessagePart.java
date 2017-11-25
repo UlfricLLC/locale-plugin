@@ -1,5 +1,9 @@
 package com.ulfric.plugin.locale.message;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 import org.bukkit.command.CommandSender;
 
 import com.ulfric.dragoon.value.Lazy;
@@ -8,10 +12,6 @@ import com.ulfric.i18n.content.Content;
 import com.ulfric.i18n.content.Detail;
 import com.ulfric.i18n.content.Details;
 import com.ulfric.plugin.locale.placeholder.Placeholder;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 public final class PlaceholderMessagePart implements MessagePart {
 
