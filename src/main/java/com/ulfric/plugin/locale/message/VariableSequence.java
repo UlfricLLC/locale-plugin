@@ -1,12 +1,12 @@
 package com.ulfric.plugin.locale.message;
 
-import com.ulfric.commons.value.Bean;
-import com.ulfric.i18n.content.Content;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
+
+import com.ulfric.commons.value.Bean;
+import com.ulfric.i18n.content.Content;
 
 public final class VariableSequence extends Bean {
 

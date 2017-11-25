@@ -30,7 +30,8 @@ public class CompiledMessage implements MessagePart {
 		APPENDERS.put("url", new UrlAppender());
 		APPENDERS.put("suggest", new SuggestAppender());
 		APPENDERS.put("command", new CommandAppender());
-		APPENDERS.put("foreach", ForEachAppender.INSTANCE);
+		APPENDERS.put("iterate", new ForEachAppender());
+		APPENDERS.put("if", new IfAppender());
 		APPENDERS.put("doc", SkipAppender.INSTANCE);
 		registerColorAppenders();
 	}

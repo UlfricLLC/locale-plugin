@@ -5,31 +5,18 @@ import org.w3c.dom.Node;
 
 import com.ulfric.commons.xml.XmlHelper;
 
-import java.util.Objects;
-
-public enum ForEachAppender implements Appender {
-
-	INSTANCE;
+public class ForEachAppender extends ComplexAppender {
 
 	@Override
 	public CompiledMessage apply(Node append, CompiledMessage to) {
 		NamedNodeMap nodes = append.getAttributes();
-		VariableSequence iterableVariable = getIterableVariable(nodes.getNamedItem("value"));
+		VariableSequence iterableVariable = getIterableVariable(nodes.getNamedItem("collection"));
 		String elementVariable = getNewDetailName(nodes, iterableVariable);
 		CompiledMessage delimiter = delimiter(nodes);
 
 		CompiledMessage continuation = new ForEachCompiledMessage(iterableVariable, elementVariable, delimiter);
 		to.addChild(continuation);
 		return continuation;
-	}
-
-	private VariableSequence getIterableVariable(Node node) {
-		Objects.requireNonNull(node, "node");
-
-		String value = XmlHelper.getNodeValue(node);
-		Objects.requireNonNull(value, "value");
-
-		return VariableSequence.of(value);
 	}
 
 	private String getNewDetailName(NamedNodeMap map, VariableSequence variable) {
