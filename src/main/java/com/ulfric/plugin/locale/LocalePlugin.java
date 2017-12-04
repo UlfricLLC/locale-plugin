@@ -7,7 +7,7 @@ public class LocalePlugin extends Plugin {
 
 	public LocalePlugin() {
 		install(PlaceholderFeature.class);
-		install(PathLocale.class);
+		install(Conf4jLocale.class);
 		install(LocalizedTell.class);
 		install(LocalizedInput.class);
 	}

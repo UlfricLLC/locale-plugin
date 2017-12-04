@@ -10,7 +10,7 @@ import com.ulfric.dragoon.conf4j.Settings;
 import com.ulfric.dragoon.extension.inject.Inject;
 import com.ulfric.plugin.services.ServiceApplication;
 
-public class PathLocale extends ServiceApplication implements LocaleService { // TODO different language support
+public class Conf4jLocale extends ServiceApplication implements LocaleService { // TODO different language support
 
 	public static final String DEFAULT_LOCALE_CODE = Locale.getDefault().toLanguageTag().replace('-', '_');
 
@@ -22,7 +22,7 @@ public class PathLocale extends ServiceApplication implements LocaleService { //
 
 	private final Map<String, BukkitMessageLocale> compiledLocales = MapHelper.newConcurrentMap(4);
 
-	public PathLocale() {
+	public Conf4jLocale() {
 		addShutdownHook(compiledLocales::clear);
 		addBootHook(() -> {
 			if (logger != null) {
