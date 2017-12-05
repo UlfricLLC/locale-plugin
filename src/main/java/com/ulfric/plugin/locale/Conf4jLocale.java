@@ -14,7 +14,7 @@ public class Conf4jLocale extends ServiceApplication implements LocaleService { 
 
 	public static final String DEFAULT_LOCALE_CODE = Locale.getDefault().toLanguageTag().replace('-', '_');
 
-	@Settings
+	@Settings(extension = "locale")
 	private LocaleConfigurationBean messages;
 
 	@Inject(optional = true)
