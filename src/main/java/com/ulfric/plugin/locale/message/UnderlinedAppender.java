@@ -8,7 +8,7 @@ public enum UnderlinedAppender implements Appender {
 
 	@Override
 	public CompiledMessage apply(Node append, CompiledMessage to) {
-		if (to.base.getUnderlined() == null && !to.hasChildren()) {
+		if (to.base.getUnderlined() == null && isStandalone(append, to)) {
 			to.base.setUnderlined(Boolean.TRUE);
 			return to;
 		}

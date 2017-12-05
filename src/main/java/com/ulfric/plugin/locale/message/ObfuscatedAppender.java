@@ -8,7 +8,7 @@ public enum ObfuscatedAppender implements Appender {
 
 	@Override
 	public CompiledMessage apply(Node append, CompiledMessage to) {
-		if (to.base.getObfuscated() == null && !to.hasChildren()) {
+		if (to.base.getObfuscated() == null && isStandalone(append, to)) {
 			to.base.setObfuscated(Boolean.TRUE);
 			return to;
 		}

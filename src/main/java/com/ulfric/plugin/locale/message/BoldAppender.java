@@ -8,7 +8,7 @@ public enum BoldAppender implements Appender {
 
 	@Override
 	public CompiledMessage apply(Node append, CompiledMessage to) {
-		if (to.base.getBold() == null && !to.hasChildren()) {
+		if (to.base.getBold() == null && isStandalone(append, to)) {
 			to.base.setBold(Boolean.TRUE);
 			return to;
 		}
