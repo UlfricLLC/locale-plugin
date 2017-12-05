@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import com.ulfric.commons.collection.MapHelper;
+import com.ulfric.conf4j.interpreter.locale.Messages;
 import com.ulfric.dragoon.conf4j.Settings;
 import com.ulfric.dragoon.extension.inject.Inject;
 import com.ulfric.plugin.services.ServiceApplication;
@@ -15,7 +16,7 @@ public class Conf4jLocale extends ServiceApplication implements LocaleService { 
 	public static final String DEFAULT_LOCALE_CODE = Locale.getDefault().toLanguageTag().replace('-', '_');
 
 	@Settings(extension = "locale")
-	private LocaleConfigurationBean messages;
+	private Messages messages;
 
 	@Inject(optional = true)
 	private Logger logger;
@@ -26,7 +27,7 @@ public class Conf4jLocale extends ServiceApplication implements LocaleService { 
 		addShutdownHook(compiledLocales::clear);
 		addBootHook(() -> {
 			if (logger != null) {
-				int messages = this.messages.messages().values().stream().mapToInt(Map::size).sum();
+				int messages = this.messages.messages().size();
 				if (messages == 0) {
 					logger.warning("No locale messages loaded");
 				} else if (messages == 1) {
@@ -46,7 +47,7 @@ public class Conf4jLocale extends ServiceApplication implements LocaleService { 
 	@Override
 	public BukkitMessageLocale getLocale(String code) {
 		return compiledLocales.computeIfAbsent(code.replace('-', '_'), localeName -> {
-			Map<String, String> messages = this.messages.messages().get(localeName);
+			Map<String, String> messages = this.messages.messages();
 
 			if (messages == null) {
 				if (DEFAULT_LOCALE_CODE.equals(localeName)) {
