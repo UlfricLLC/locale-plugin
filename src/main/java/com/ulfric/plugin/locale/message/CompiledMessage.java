@@ -28,6 +28,7 @@ public class CompiledMessage implements MessagePart {
 		APPENDERS.put("bold", BoldAppender.INSTANCE);
 		APPENDERS.put("hover", new HoverAppender());
 		APPENDERS.put("url", new UrlAppender());
+		APPENDERS.put("link", new LinkAppender());
 		APPENDERS.put("suggest", new SuggestAppender());
 		APPENDERS.put("command", new CommandAppender());
 		APPENDERS.put("iterate", new ForEachAppender());
