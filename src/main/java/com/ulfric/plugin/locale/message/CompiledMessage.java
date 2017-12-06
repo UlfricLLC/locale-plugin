@@ -52,7 +52,7 @@ public class CompiledMessage implements MessagePart {
 	}
 
 	public static CompiledMessage compile(String message) {
-		message = message.replace("{n}", "\n");
+		message = message.replace("${n}", "\n");
 		// TODO actually support color schemes
 		message = temporaryHackForColorSchemes(message);
 
