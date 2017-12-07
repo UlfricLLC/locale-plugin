@@ -48,7 +48,7 @@ public class ForEachCompiledMessage extends CompiledMessage {
 		int lastIndex = contentSize - 1;
 		for (int x = 0; x < contentSize; x++) {
 			Content element = elements.transform(content.get(x));
-			if (element == null) {
+			if (Content.isNothing(element)) {
 				continue;
 			}
 
