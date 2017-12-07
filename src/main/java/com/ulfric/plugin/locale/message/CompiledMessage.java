@@ -33,6 +33,7 @@ public class CompiledMessage implements MessagePart {
 		APPENDERS.put("command", new CommandAppender());
 		APPENDERS.put("iterate", new ForEachAppender());
 		APPENDERS.put("if", new IfAppender());
+		APPENDERS.put("line", NewLineAppender.INSTANCE);
 		APPENDERS.put("doc", SkipAppender.INSTANCE);
 		registerColorAppenders();
 	}
@@ -53,7 +54,7 @@ public class CompiledMessage implements MessagePart {
 	}
 
 	public static CompiledMessage compile(String message) {
-		message = message.replace("${n}", "\n");
+		message = message.replace("${n}", "<line></line>");
 		// TODO actually support color schemes
 		message = temporaryHackForColorSchemes(message);
 
