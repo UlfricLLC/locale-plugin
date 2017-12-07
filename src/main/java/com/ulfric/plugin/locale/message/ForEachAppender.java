@@ -12,9 +12,10 @@ public class ForEachAppender extends ComplexAppender {
 		NamedNodeMap nodes = append.getAttributes();
 		VariableSequence iterableVariable = getIterableVariable(nodes.getNamedItem("collection"));
 		String elementVariable = getNewDetailName(nodes, iterableVariable);
-		CompiledMessage delimiter = delimiter(nodes);
+		CompiledMessage delimiter = value(nodes, "delimiter");
+		CompiledMessage empty = value(nodes, "empty");
 
-		CompiledMessage continuation = new ForEachCompiledMessage(iterableVariable, elementVariable, delimiter);
+		CompiledMessage continuation = new ForEachCompiledMessage(iterableVariable, elementVariable, delimiter, empty);
 		to.addChild(continuation);
 		return continuation;
 	}
@@ -35,8 +36,8 @@ public class ForEachAppender extends ComplexAppender {
 		return size > 1 && variable.endsWith("s") ? variable.substring(0, size - 1) : variable;
 	}
 
-	private CompiledMessage delimiter(NamedNodeMap nodes) {
-		Node delimiter = nodes.getNamedItem("delimiter");
+	private CompiledMessage value(NamedNodeMap nodes, String name) {
+		Node delimiter = nodes.getNamedItem(name);
 
 		if (delimiter == null) {
 			return null;

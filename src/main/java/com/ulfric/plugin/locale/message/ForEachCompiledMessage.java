@@ -17,14 +17,16 @@ public class ForEachCompiledMessage extends CompiledMessage {
 	private final VariableSequence elements;
 	private final String element;
 	private final MessagePart delimiter;
+	private final MessagePart empty;
 
-	public ForEachCompiledMessage(VariableSequence elements, String element, MessagePart delimiter) {
+	public ForEachCompiledMessage(VariableSequence elements, String element, MessagePart delimiter, MessagePart empty) {
 		Objects.requireNonNull(elements, "elements");
 		Objects.requireNonNull(element, "element");
 
 		this.elements = elements;
 		this.element = element;
 		this.delimiter = delimiter;
+		this.empty = empty;
 	}
 
 	@Override
@@ -42,8 +44,8 @@ public class ForEachCompiledMessage extends CompiledMessage {
 		Message base = createBase();
 		int contentSize = content.size();
 		int size = contentSize * (delimiter == null ? 1 : 2);
+
 		List<Message> extra = new ArrayList<>(size);
-		base.setExtra(extra);
 
 		int lastIndex = contentSize - 1;
 		for (int x = 0; x < contentSize; x++) {
@@ -77,6 +79,15 @@ public class ForEachCompiledMessage extends CompiledMessage {
 					extra.add(delimiter.toMessage(display, details)); // TODO optimize to only use one new delimiter message if needed
 				}
 			}
+		}
+
+		if (extra.isEmpty()) {
+			if (empty != null) {
+				extra.add(empty.toMessage(display, details));
+				base.setExtra(extra);
+			}
+		} else {
+			base.setExtra(extra);
 		}
 
 		return base;
