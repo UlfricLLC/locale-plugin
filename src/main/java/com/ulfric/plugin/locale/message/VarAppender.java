@@ -10,7 +10,7 @@ public class VarAppender extends ComplexAppender {
 	@Override
 	public CompiledMessage apply(Node append, CompiledMessage to) {
 		NamedNodeMap nodes = append.getAttributes();
-		String variable = XmlHelper.getNodeValue(nodes.getNamedItem("variable"));
+		String variable = XmlHelper.getNodeValue(nodes.getNamedItem("name"));
 		VariableSequence function = getIterableVariable(nodes.getNamedItem("function"));
 
 		CompiledMessage continuation = new VarCompiledMessage(variable, function);
