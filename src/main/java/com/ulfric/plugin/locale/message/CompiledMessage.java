@@ -33,6 +33,7 @@ public class CompiledMessage implements MessagePart {
 		APPENDERS.put("command", new CommandAppender());
 		APPENDERS.put("iterate", new ForEachAppender());
 		APPENDERS.put("if", new IfAppender());
+		APPENDERS.put("var", new VarAppender());
 		APPENDERS.put("line", NewLineAppender.INSTANCE);
 		APPENDERS.put("doc", SkipAppender.INSTANCE);
 		registerColorAppenders();
