@@ -23,7 +23,7 @@ public class IfAppender extends ComplexAppender {
 			String name = child.getNodeName();
 			if (name.equals("then")) {
 				then = CompiledMessage.compile(child);
-			} else if (name.equals("otherwise")) {
+			} else if (name.equals("else")) {
 				otherwise = CompiledMessage.compile(child);
 			}
 		}
