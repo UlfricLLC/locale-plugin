@@ -59,8 +59,12 @@ public class CompiledMessage implements MessagePart {
 		// TODO actually support color schemes
 		message = temporaryHackForColorSchemes(message);
 
-		Element root = XmlHelper.parseHumanDocument(message).getDocumentElement();
-		return compile(root);
+		try {
+			Element root = XmlHelper.parseHumanDocument(message).getDocumentElement();
+			return compile(root);
+		} catch (Exception thrown) {
+			throw new RuntimeException(message, thrown);
+		}
 	}
 
 	private static String temporaryHackForColorSchemes(String message) {
