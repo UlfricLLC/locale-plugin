@@ -3,12 +3,12 @@ package com.ulfric.plugin.locale;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import com.ulfric.commons.collection.MapHelper;
 import com.ulfric.conf4j.interpreter.locale.Messages;
 import com.ulfric.dragoon.conf4j.Settings;
 import com.ulfric.dragoon.extension.inject.Inject;
-import com.ulfric.dragoon.logging.Log;
 import com.ulfric.plugin.services.ServiceApplication;
 
 public class Conf4jLocale extends ServiceApplication implements LocaleService { // TODO different language support
@@ -19,7 +19,7 @@ public class Conf4jLocale extends ServiceApplication implements LocaleService { 
 	private Messages messages;
 
 	@Inject
-	private Log logger;
+	private Logger logger;
 
 	private final Map<String, BukkitMessageLocale> compiledLocales = MapHelper.newConcurrentMap(4);
 
